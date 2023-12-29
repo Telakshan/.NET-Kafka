@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CQRS.Core.Events;
 
 namespace Post.Common.Events;
 
 public class CommentUpdatedEvent : BaseEvent
 {
-    public CommentAddedEvent() : base(nameof(CommentUpdatedEvent))
+    public CommentUpdatedEvent() : base(nameof(CommentUpdatedEvent))
     {
 
     }

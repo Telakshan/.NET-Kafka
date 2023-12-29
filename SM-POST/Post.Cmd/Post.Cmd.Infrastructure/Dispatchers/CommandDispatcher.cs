@@ -13,11 +13,18 @@ public class CommandDispatcher : ICommandDispatcher
             throw new IndexOutOfRangeException("You cannot register the same command handler twice");
         }
 
-        _handlers.Add(typeof(T), x => handler(x(T)));
+        _handlers.Add(typeof(T), x => handler(x (T)));
     }
 
-    public Task SendAsync(BaseCommand command)
+    public async Task SendAsync(BaseCommand command)
     {
-        throw new NotImplementedException();
+        if (_handlers.TryGetValue(command.GetType(), out Func<BaseCommand, Task> handler))
+        {
+            await handler(command);
+        }
+        else
+        {
+            throw new ArgumentNullException(nameof(handler), "No command handler was registered");
+        }
     }
 }
