@@ -8,7 +8,7 @@ namespace Post.Common.Events;
 
 public class MessageUpdatedEvent: BaseEvent
 {
-    protected MessageUpdatedEvent(): base(typeof(MessageUpdatedEvent))
+    protected MessageUpdatedEvent(): base(nameof(MessageUpdatedEvent))
     {
 
     }
