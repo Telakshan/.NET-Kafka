@@ -13,7 +13,7 @@ public class CommandDispatcher : ICommandDispatcher
             throw new IndexOutOfRangeException("You cannot register the same command handler twice");
         }
 
-        _handlers.Add(typeof(T), x => handler(x (T)));
+        _handlers.Add(typeof(T), x => handler((T)x));
     }
 
     public async Task SendAsync(BaseCommand command)
