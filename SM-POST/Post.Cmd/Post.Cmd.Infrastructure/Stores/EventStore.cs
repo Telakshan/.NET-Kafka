@@ -17,7 +17,7 @@ public class EventStore : IEventStore
         _eventStoreRepository  = eventStoreRepository; 
     }
 
-    public async Task<List<BaseEvent>> GetsEventsAsync(Guid aggregateId)
+    public async Task<List<BaseEvent>> GetEventsAsync(Guid aggregateId)
     {
         var eventStream = await _eventStoreRepository.FindByAggregateId(aggregateId);
 

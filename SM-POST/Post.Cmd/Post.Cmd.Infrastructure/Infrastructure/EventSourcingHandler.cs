@@ -16,7 +16,7 @@ public class EventSourcingHandler : IEventSourcingHandler<PostAggregate>
     public async Task<PostAggregate> GetByIdAsync(Guid aggregateId)
     {
         var aggregate = new PostAggregate();
-        var events = await _eventStore.GetsEventsAsync(aggregateId);
+        var events = await _eventStore.GetEventsAsync(aggregateId);
 
         if (events == null || !events.Any())
             return aggregate;
