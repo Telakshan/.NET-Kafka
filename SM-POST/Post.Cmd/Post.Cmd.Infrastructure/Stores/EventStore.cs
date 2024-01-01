@@ -52,6 +52,9 @@ public class EventStore : IEventStore
             };
 
             await _eventStoreRepository.SaveAsync(eventModel);
+
+            var topic = Environment.GetEnvironmentVariable("KAFKA_TOPIC");
+            await _eventProducer.ProduceAsync(topic!, @event);
         }
     }
 }

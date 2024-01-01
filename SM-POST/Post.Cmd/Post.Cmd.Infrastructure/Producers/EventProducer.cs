@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace Post.Cmd.Infrastructure.Producers;
 
-public class EventProducer: IEventProducer<BaseEvent>
+public class EventProducer: IEventProducer
 {
     private readonly ProducerConfig _config;
     
