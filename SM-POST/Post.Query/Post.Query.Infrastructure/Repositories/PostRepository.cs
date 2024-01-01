@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Post.Common.Exceptions;
 using Post.Query.Domain.Entities;
 using Post.Query.Domain.Repositories;
 using Post.Query.Infrastructure.DataAccess;
@@ -28,7 +29,7 @@ public class PostRepository : IPostRepository
 
         var post = await GetByIdAsync(postId);
 
-        if (post != null) return;
+        if (post == null) return;
 
         context.Posts.Remove(post); 
         _ = await context.SaveChangesAsync();
@@ -37,9 +38,12 @@ public class PostRepository : IPostRepository
     public async Task<PostEntity> GetByIdAsync(Guid postId)
     {
         using DatabaseContext context = _contextFactory.CreateDbContext();
-        return await context.Posts
-            .Include(p => p.Comments)
-            .FirstOrDefaultAsync(x => x.PostId == postId);
+
+        var post = await context.Posts
+                        .Include(p => p.Comments)
+                        .FirstOrDefaultAsync(x => x.PostId == postId);
+
+        return post ?? throw new NotFoundException(nameof(PostEntity), postId);
     }
 
     public async Task<List<PostEntity>> ListAllAsync()

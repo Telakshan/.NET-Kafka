@@ -8,7 +8,7 @@ public class PostEntity
 {
     [Key]
     public Guid PostId { get; set; }
-    public string Author { get; set; } = null!;
+    public string? Author { get; set; }
     public DateTime DatePosted { get; set; }
     public string? Message { get; set; }
     public int Likes { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Post.Common.Exceptions;
 using Post.Query.Domain.Entities;
 using Post.Query.Domain.Repositories;
 using Post.Query.Infrastructure.DataAccess;
@@ -37,7 +38,9 @@ public class CommentRepository : ICommentRepository
     public async Task<CommentEntity> GetByIdAsync(Guid commentId)
     {
         using DatabaseContext context = _contextFactory.CreateDbContext();
-        return await context.Comments.FirstOrDefaultAsync(x => x.CommentId == commentId);
+        var comment = await context.Comments.FirstOrDefaultAsync(x => x.CommentId == commentId);
+
+        return comment ?? throw new NotFoundException(nameof(CommentEntity), commentId);
     }
 
     public async Task UpdateAsync(CommentEntity comment)
