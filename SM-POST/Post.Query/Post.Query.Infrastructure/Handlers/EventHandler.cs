@@ -26,7 +26,7 @@ public class EventHandler : IEventHandler
         };
 
         await _postRepository.CreateAsync(post);
-    }
+    } 
 
     public async Task On(MessageUpdatedEvent @event)
     {
