@@ -12,9 +12,10 @@ public class EventStore : IEventStore
     private readonly IEventStoreRepository _eventStoreRepository;
     private readonly IEventProducer _eventProducer;
     
-    public EventStore(IEventStoreRepository eventStoreRepository)
+    public EventStore(IEventStoreRepository eventStoreRepository, IEventProducer eventProducer)
     {
         _eventStoreRepository  = eventStoreRepository; 
+        _eventProducer = eventProducer;
     }
 
     public async Task<List<BaseEvent>> GetEventsAsync(Guid aggregateId)

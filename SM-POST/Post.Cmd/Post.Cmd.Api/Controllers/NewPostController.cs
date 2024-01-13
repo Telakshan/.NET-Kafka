@@ -31,6 +31,7 @@ public class NewPostController: ControllerBase
 
             return StatusCode(StatusCodes.Status201Created, new NewPostResponse
             {
+                Id = id,
                 Message = "New post creation request completed successfully"
             });
         }catch (InvalidOperationException ex) 
@@ -42,7 +43,7 @@ public class NewPostController: ControllerBase
             const string SAFE_ERROR_MESSAGE = "Error while processing request to create a new post";
             _logger.Log(LogLevel.Error, ex, SAFE_ERROR_MESSAGE);
 
-            return StatusCode(StatusCodes.Status500InternalServerError, new NewPostCommand
+            return StatusCode(StatusCodes.Status500InternalServerError, new NewPostResponse
             {
                 Id = id, 
                 Message = SAFE_ERROR_MESSAGE
