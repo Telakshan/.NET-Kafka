@@ -24,6 +24,8 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_LISTENERS=PLAINTEXT://:9092
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_MESSAGE_MAX_BYTES=2147483647 
+      - KAFKA_LOG_SEGMENT_BYTES=5000000
     depends_on:
       - zookeeper
   sql-container:
@@ -42,7 +44,7 @@ services:
     image: mongo:latest
     restart: always
     ports:
-      - '27017:27017'
+      - '27018:27017'
     volumes:
       - "mongo_data:/data/db"
     networks:
@@ -59,5 +61,4 @@ volumes:
 networks:
   mydockernetwork:
       name: mydockernetwork
-      external: true
 
