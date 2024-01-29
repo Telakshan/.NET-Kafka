@@ -17,9 +17,9 @@ public class EventStoreRepository : IEventStoreRepository
 
         _eventStoreCollection = mongoDatabase.GetCollection<EventModel>(config.Value.Collection);
     }
-    public Task<List<EventModel>> FindAllAsync()
+    public async Task<List<EventModel>> FindAllAsync()
     {
-        throw new NotImplementedException();
+        return await _eventStoreCollection.Find(p => true).ToListAsync();
     }
 
     public async Task<List<EventModel>> FindByAggregateId(Guid aggregateId)
