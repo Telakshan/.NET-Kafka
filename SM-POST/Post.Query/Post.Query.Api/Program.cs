@@ -15,10 +15,17 @@ Action<DbContextOptionsBuilder> configureDbContext = (o => o.UseLazyLoadingProxi
 builder.Services.AddDbContext<DatabaseContext>(configureDbContext);
 builder.Services.AddSingleton(new DatabaseContextFactory(configureDbContext));
 
-var dataContext = builder.Services.BuildServiceProvider().GetRequiredService<DatabaseContext>();
+
+#pragma warning disable CS8604 // Possible null reference argument.s
+#pragma warning disable ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
+var dataContext = builder.Services?.BuildServiceProvider().GetRequiredService<DatabaseContext>();
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
 dataContext.Database.EnsureCreated();
 
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IEventHandler, Post.Query.Infrastructure.Handlers.EventHandler>();
 builder.Services.Configure<ConsumerConfig>(builder.Configuration.GetSection(nameof(ConsumerConfig)));
