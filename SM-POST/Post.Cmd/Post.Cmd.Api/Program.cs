@@ -14,6 +14,8 @@ using Post.Cmd.Infrastructure.Repositories;
 using Post.Cmd.Infrastructure.Stores;
 using Post.Query.Domain.Aggregates;
 
+//Environment.SetEnvironmentVariable("KAFKA_TOPIC", "SocialMediaPostEvents");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
