@@ -21,7 +21,7 @@
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "http://localhost:5010",
+                "ASPNETCORE_URLS": "http://localhost:7070",
                 "KAFKA_TOPIC": "SocialMediaPostEvents"
             },
             "sourceFileMap": {
@@ -48,7 +48,7 @@
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "http://localhost:5011",
+                "ASPNETCORE_URLS": "http://localhost:7053",
                 "KAFKA_TOPIC": "SocialMediaPostEvents"
             },
             "sourceFileMap": {
