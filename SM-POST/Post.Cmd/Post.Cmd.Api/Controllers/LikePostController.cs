@@ -23,11 +23,8 @@ public class LikePostController: ControllerBase
     [HttpPut]
     public async Task<ActionResult> LikePostAsync(LikePostCommand command)
     {
-        var id = Guid.NewGuid();
         try
-        {
-            command.Id = id;
-            
+        {            
             await _commandDispatcher.SendAsync(command);
 
             return Ok(new BaseResponse
@@ -56,7 +53,7 @@ public class LikePostController: ControllerBase
 
             return StatusCode(StatusCodes.Status500InternalServerError, new NewPostResponse
             {
-                Id = id,
+                Id = command.Id,
                 Message = SAFE_ERROR_MESSAGE
             });
         }

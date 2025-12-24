@@ -34,6 +34,6 @@ public class EventStoreRepository : IEventStoreRepository
 
     public string GuidToBase64(Guid guid)
     {
-        return System.Convert.ToBase64String(guid.ToByteArray());
+        return Convert.ToBase64String(guid.ToByteArray());
     }
 }
