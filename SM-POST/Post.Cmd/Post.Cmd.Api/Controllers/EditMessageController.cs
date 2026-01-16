@@ -34,7 +34,7 @@ public class EditMessageController : ControllerBase
         }
         catch (AggregateNotFoundException ex)
         {
-            _logger.Log(LogLevel.Warning, ex, "Client made bad request");
+            _logger.Log(LogLevel.Warning, ex, "Could not retrieve aggregate, client passed an incorrect postId.");
             return BadRequest(new BaseResponse
             {
                 Message = ex.Message
@@ -47,7 +47,7 @@ public class EditMessageController : ControllerBase
         }
         catch (Exception ex)
         {
-            const string SAFE_ERROR_MESSAGE = "Error while processing request to create a new post";
+            const string SAFE_ERROR_MESSAGE = "Error while processing request to update post";
             _logger.Log(LogLevel.Error, ex, SAFE_ERROR_MESSAGE);
 
             return StatusCode(StatusCodes.Status500InternalServerError, new NewPostResponse

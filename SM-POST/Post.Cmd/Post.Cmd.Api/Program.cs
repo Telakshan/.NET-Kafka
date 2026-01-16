@@ -4,7 +4,6 @@ using CQRS.Core.Domain;
 using CQRS.Core.Handlers;
 using CQRS.Core.Infrastructure;
 using CQRS.Core.Producers;
-using MongoDB.Bson.Serialization;
 using Post.Cmd.Api.Commands;
 using Post.Cmd.Infrastructure.Config;
 using Post.Cmd.Infrastructure.Dispatchers;
@@ -28,7 +27,9 @@ builder.Services.AddScoped<IEventSourcingHandler<PostAggregate>, EventSourcingHa
 builder.Services.AddScoped<ICommandHandler, CommandHandler>();
 
 //Register command handler methods
+#pragma warning disable ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
 var commandHandler = builder.Services.BuildServiceProvider().GetRequiredService<ICommandHandler>();
+#pragma warning restore ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
 var dispatcher = new CommandDispatcher();
 dispatcher.RegisterHandler<NewPostCommand>(commandHandler.HandleAsync);
 dispatcher.RegisterHandler<EditMessageCommand>(commandHandler.HandleAsync);

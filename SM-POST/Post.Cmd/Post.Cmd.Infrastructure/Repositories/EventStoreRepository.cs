@@ -31,4 +31,9 @@ public class EventStoreRepository : IEventStoreRepository
     {
         await _eventStoreCollection.InsertOneAsync(@event).ConfigureAwait(false); 
     }
+
+    public string GuidToBase64(Guid guid)
+    {
+        return Convert.ToBase64String(guid.ToByteArray());
+    }
 }

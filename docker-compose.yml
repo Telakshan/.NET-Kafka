@@ -29,18 +29,31 @@ services:
     depends_on:
       - zookeeper
   sql-container:
+    container_name: social.portal
+    hostname: mssql-db
     image: 'mcr.microsoft.com/mssql/server:latest'
     restart: always
     ports:
-        - '1433:1433'
+      - "1432:1433"
     environment:
-        - ACCEPT_EULA=Y
-        - SA_PASSWORD=Secret@1234
-        - MSSQL_PID=Express
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: 'Admin@123'
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_PID: 'Developer'
+      MSSQL_TCP_PORT: 1433
     networks:
-        - mydockernetwork
+      - mydockernetwork
+    volumes:
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    command:
+      - /bin/bash
+      - -c
+      - |
+        /opt/mssql/bin/sqlservr &
+        sleep 30s
+        /docker-entrypoint-initdb.d/init-db.sh
   mongo-container:
-    container_name: socialMedia
+    container_name: socialmedia
     image: mongo:latest
     restart: always
     ports:
@@ -49,6 +62,22 @@ services:
       - "mongo_data:/data/db"
     networks:
         - mydockernetwork
+
+  # Doesn't work, you should be ashamed of yourself
+  # mongo-express:
+  #   image: mongo-express:latest
+  #   container_name: mongo_gui
+  #   environment:
+  #       ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #       ME_CONFIG_MONGODB_ADMINPASSWORD: password
+  #       ME_CONFIG_MONGODB_URL: mongodb://socialmedia:27018/
+  #       ME_CONFIG_MONGODB_PORT: 27018
+  #   ports:
+  #     - '8081:8081'
+  #   networks:
+  #     - mydockernetwork
+  #   depends_on:
+  #     - mongo-container
 
 volumes:
   zookeeper_data:
